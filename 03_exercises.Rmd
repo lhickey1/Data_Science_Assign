@@ -89,7 +89,7 @@ garden_harvest %>%
 garden_harvest %>% 
   group_by(variety, vegetable) %>% 
   summarize(total_harvest_weight= sum(weight)*0.00220462) %>% 
-  full_join(garden_planting, by = c("variety"="variety")) %>% 
+  full_join(garden_planting, by = "variety")
 ```
 
 There are some NAs within the joined data set.  We could go in and manually add these data points or we could make sure that the data that is recorded is recorded in exactly the same way (making all capitals or all lowercase).  Making all the varieties names lowercase could be done in r. I could have done semi_join, but that would have left out varieties that did not precisly match.
@@ -100,7 +100,6 @@ There are some NAs within the joined data set.  We could go in and manually add 
 garden_spending %>%
   left_join(garden_harvest, by = "variety")
 ```
-  
   
   You could find how much each vegetable that is being grown in your garden costs at whole foods by pound.  This could be stored into a third data set.  You would not have to put this information in a data set in order to use it though, you could use this information by mutate and creating a new variable in the garden_harvest data set.  In this function, you would multiply the cost by the weight of harvest, this variable could be called store_value.  After calculating the store value, you could summarize the amount of money that you saved by creating.  Then you could use left join to join the two data sets by the variety of vegetables.
   
@@ -165,9 +164,8 @@ Two data tables are available:
 Here is the code to read in the data. We do this a little differently than usualy, which is why it is included here rather than at the top of this file. To avoid repeatedly re-reading the files, start the data import chunk with `{r cache = TRUE}` rather than the usual `{r}`.
 
 ```{r cache=TRUE}
+#data_site <- "https://www.macalester.edu/~dshuman1/data/112/2014-Q4-Trips-History-Data-Small.rds" 
 data_site <- 
-  "https://www.macalester.edu/~dshuman1/data/112/2014-Q4-Trips-History-Data-Small.rds" 
-#data_site <- 
   "https://www.macalester.edu/~dshuman1/data/112/2014-Q4-Trips-History-Data.rds" 
 Trips <- readRDS(gzcon(url(data_site)))
 Stations<-read_csv("http://www.macalester.edu/~dshuman1/data/112/DC-Stations.csv")
@@ -255,7 +253,6 @@ Trips %>%
   12. Change the previous graph by adding the argument `position = position_stack()` to `geom_density()`. In your opinion, is this better or worse in terms of telling a story? What are the advantages/disadvantages of each?
   
 ```{r}
-# FIX EXPLANATION
 Trips %>% 
   mutate(day_of_week = wday(sdate, label=TRUE)) %>% 
   group_by(day_of_week) %>% 
@@ -405,6 +402,8 @@ Trips %>%
 ## GitHub link
 
   20. Below, provide a link to your GitHub page with this set of Weekly Exercises. Specifically, if the name of the file is 03_exercises.Rmd, provide a link to the 03_exercises.md file, which is the one that will be most readable on GitHub.
+  
+  https://github.com/lhickey1/Data_Science_Assign/blob/e46d656a65cb5c48e55ed78627122cf78989be1e/03_exercises.Rmd
 
 ## Challenge problem! 
 
